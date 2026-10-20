@@ -3,7 +3,7 @@ import time
 
 from checks import check_plex, check_abs, get_health
 from state import update_state
-from oled import SSD1306
+from display_factory import create_display
 
 
 HOST = "Emma-PC"
@@ -38,7 +38,7 @@ def handle_event(
 
 
 def main() -> None:
-    oled = SSD1306()
+    display = create_display()
 
     plex_state = None
     abs_state = None
@@ -124,12 +124,11 @@ def main() -> None:
                 f"{uptime['minutes']}m"
             )
 
-        # Update OLED
-        oled.show_status(
-            plex_state,
-            abs_state,
-            windows_agent_state,
-        )
+        display.show_status(
+        plex_state,
+        abs_state,
+        windows_agent_state,
+        )   
 
         print()
 
